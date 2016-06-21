@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../lib/vue.js"></script>
+<body>
+    <div id="app">
+        {{message}}
+        <br/>
+        <input v-model="message">
+    </div>
+    <div id="list">
+        <h2>渲染一个list</h2>
+        <ul>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ul>
+    </div>
+
+    <div id="handdle">
+        <h2>对input做操作</h2>
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage">字符逆向</button>
+    </div>
+
+    <hr/>
+    <div id="todolist">
+        <h2>todo list</h2>
+        <input v-model="todoInput">
+        <button v-on:click="addTodoList">添加</button>
+        <ul>
+            <h3>to do list</h3>
+            <li v-for="todo in todos">
+                <label>{{todo.text}}</label> <button v-on:click="removeTodo($index)">X</button>
+            </li>
+        </ul>
+    </div>
+<script>
+    new Vue({
+        el:'#todolist',
+        data:{
+            todos:[],
+            todoInput:''
+        },
+        methods:{
+            addTodoList:function () {
+                this.todos.push({text:this.todoInput});
+                this.todoInput ='';
+            },
+            removeTodo:function (index) {
+                this.todos.splice(index,1);
+            }
+        }
+    })
+
+
+    new Vue({
+        el:'#app',
+        data:{
+            message:"hello world!"
+        }
+    });
+    new Vue({
+            el:'#list',
+            data: {
+                todos: [
+                    {text: "haha"},
+                    {text: "haha"},
+                    {text: "haha"}
+                ]
+            }});
+    new Vue({
+        el:'#handdle',
+        data:{
+            message:"测试 真好玩儿"
+        },
+        methods:{
+            reverseMessage:function () {
+                this.message = this.message.split('').reverse().join('')
+            }
+        }
+    })
+</script>
+</body>
+</html>
